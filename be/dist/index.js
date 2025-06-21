@@ -8,6 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const routes_1 = __importDefault(require("./routes"));
+require("./models");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = (_a = process.env.port) !== null && _a !== void 0 ? _a : 3001;
