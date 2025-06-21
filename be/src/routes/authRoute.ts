@@ -1,9 +1,10 @@
 import express from "express";
-import { signup } from "../controller/signup";
+import {requestOtp} from "../controller/request-otp";
+import {verifyOtp} from "../controller/verify-otp";
 
 const router = express.Router();
 
-// @ts-ignore
-router.post("/signup", signup);
+router.post("/request-otp", requestOtp);
+router.post("/verify-otp", verifyOtp);
 
 export default router;
