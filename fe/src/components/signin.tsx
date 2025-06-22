@@ -47,6 +47,7 @@ export default function Signin() {
         const data = await res.json();
         setError(data.message || "Failed to send OTP");
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError("Server error. Please try again.");
     } finally {

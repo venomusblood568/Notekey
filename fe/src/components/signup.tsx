@@ -36,6 +36,7 @@ export default function Signup() {
       } else {
         setError(data.message || "Failed to send OTP");
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError("Server error");
     } finally {
@@ -72,17 +73,23 @@ export default function Signup() {
         throw new Error(data.message || "OTP Verification Failed");
       }
 
-      if(res.ok){
+      if (res.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("name", data.user.name);
         localStorage.setItem("email", data.user);
-        alert("Signup successful")
+        alert("Signup successful");
       }
-      navigate("/dashboard"); 
-    } catch (error:unknown) {
-      console.error(error.message);
-      alert(error.message);
+      navigate("/dashboard");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        alert(error.message);
+      } else {
+        console.error("An unexpected error occurred.");
+        alert("An unexpected error occurred.");
+      }
     }
+    
   };
   
 
