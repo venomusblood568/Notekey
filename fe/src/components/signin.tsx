@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
 export default function Signin() {
     const navigate = useNavigate();
+    const [showOTP, setShowOTP] = useState(false);
     const navigateSignup = () => {
       navigate("/");
     };
@@ -43,11 +44,24 @@ export default function Signin() {
                 <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm font-semibold">
                   OTP
                 </label>
-                <input
-                  type="text"
-                  placeholder="Enter OTP"
-                  className="w-full border-0 p-2 outline-none"
-                />
+                <div className="flex items-center">
+                  <input
+                    type={showOTP ? "text" : "password"}
+                    placeholder="Enter OTP"
+                    className="w-full border-0 p-2 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowOTP(!showOTP)}
+                    className="p-2"
+                  >
+                    <img
+                      src={showOTP ? "/eye.png" : "/hidden.png"}
+                      alt="Toggle visibility"
+                      className="w-5 h-5"
+                    />
+                  </button>
+                </div>
               </div>
               <div className="text-blue-600 underline">Forgot Password ?</div>
               <div className="flex items-center gap-2">
