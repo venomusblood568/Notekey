@@ -10,6 +10,7 @@ export default function Signin() {
   const [isSendingOTP, setIsSendingOTP] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
+  const [keepLoggedIn, setKeepLoggedIn] = useState(false);
 
   const navigateSignup = () => navigate("/");
 
@@ -22,7 +23,7 @@ export default function Signin() {
     if (isValid) {
       const timer = setTimeout(() => {
         sendOTP();
-      }, 500); // Wait 500ms after typing stops
+      }, 500); 
 
       return () => clearTimeout(timer);
     }
@@ -83,8 +84,18 @@ export default function Signin() {
       console.log("Signin response:", res.ok, data);
 
       if (res.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        // Store token and user data based on "Keep me Logged In" choice
+        if (keepLoggedIn) {
+          // Use localStorage for persistent login
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+        } else {
+          // Use sessionStorage for session-only login
+          sessionStorage.setItem("token", data.token);
+          sessionStorage.setItem("user", JSON.stringify(data.user));
+        }
+
+        // Navigate to Dashboard
         navigate("/dashboard");
       } else {
         setError(data.message || "Login failed");
@@ -190,6 +201,8 @@ export default function Signin() {
               <input
                 type="checkbox"
                 id="keepLoggedIn"
+                checked={keepLoggedIn}
+                onChange={(e) => setKeepLoggedIn(e.target.checked)}
                 className="accent-blue-600 w-4 h-4"
               />
               <label htmlFor="keepLoggedIn" className="text-gray-700 text-sm">
