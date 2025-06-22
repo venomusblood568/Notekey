@@ -8,26 +8,27 @@ export default function Signin() {
     return (
       <div className="w-screen h-screen flex font-inter gap-4 overflow-hidden">
         {/* Left Side */}
-        <div className="w-[45%] bg-white relative flex flex-col justify-center px-40">
-          {/* Logo */}
-          <div className="absolute top-6 left-6 flex items-center gap-2">
+        <div className="w-full sm:w-[45%] bg-white relative flex flex-col justify-center items-center sm:items-start px-6 sm:px-40 min-h-screen">
+          <div className="absolute top-6 left-6 sm:flex items-center gap-2 hidden">
             <img src="/icon.png" alt="Logo" className="w-8 h-8" />
             <h1 className="text-xl text-black font-bold">HD</h1>
           </div>
-
-          {/* Signup Section */}
+          {/* small screens */}
+          <div className="sm:hidden flex gap-2 items-center mb-6">
+            <img src="/icon.png" alt="Logo" className="w-12 h-12 mb-2" />
+            <h1 className="text-2xl text-black font-bold">HD</h1>
+          </div>
           <div className="flex flex-col items-start w-full max-w-sm space-y-2">
             {/* Title & Description */}
-            <div className="w-full">
-              <h1 className="text-4xl font-bold text-black mb-4">Sign In</h1>
-              <p className="text-gray-500 mb-6">
+            <div className="flex flex-col items-center sm:items-start w-full max-w-sm space-y-2">
+              <h1 className="text-3xl sm:text-4xl font-bold text-black mb-2 sm:mb-4 text-center sm:text-left">
+                Sign In
+              </h1>
+              <p className="text-gray-500 mb-6 text-center sm:text-left">
                 Sign up to enjoy the feature of HD
               </p>
             </div>
-
-            {/* Form */}
             <form className="w-full space-y-6">
-              {/* Email input */}
               <div className="relative border border-gray-300 rounded-xl p-1 focus-within:ring-2 focus-within:ring-blue-500">
                 <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm font-semibold">
                   Email
@@ -38,8 +39,6 @@ export default function Signin() {
                   className="w-full border-0 p-2 outline-none"
                 />
               </div>
-
-              {/* OTP input */}
               <div className="relative border border-gray-300 rounded-xl p-1 focus-within:ring-2 focus-within:ring-blue-500">
                 <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm font-semibold">
                   OTP
@@ -61,7 +60,6 @@ export default function Signin() {
                   Keep me Logged In
                 </label>
               </div>
-              {/* Submit Button */}
               <div className="relative">
                 <button
                   type="submit"
@@ -70,23 +68,17 @@ export default function Signin() {
                   Sign in
                 </button>
               </div>
-
-              {/* OR Separator */}
               <div className="flex items-center gap-4 text-gray-500 my-4">
                 <div className="flex-1 h-px bg-gray-300" />
                 <div className="text-sm text-gray-500">or</div>
                 <div className="flex-1 h-px bg-gray-300" />
               </div>
-
-              {/* Google Button */}
               <div className="border border-gray-300 rounded-xl p-1">
                 <button className="w-full flex items-center justify-center gap-2 p-3">
                   Continue with Google
                   <img src="/google.svg" alt="Google" className="w-5 h-5" />
                 </button>
               </div>
-
-              {/* Sign-in Link */}
               <p className="text-center text-sm mt-4">
                 Already have an account?{" "}
                 <span
@@ -101,13 +93,11 @@ export default function Signin() {
         </div>
 
         {/* Right Side */}
-        <div className="w-[55%] h-screen p-2">
+        <div className="hidden sm:block w-[55%] h-screen p-2">
           <div
             className="w-full h-full rounded-3xl bg-cover bg-center flex flex-col justify-center items-start p-12"
             style={{ backgroundImage: "url('blue.jpg')" }}
-          >
-            {/* Optional overlay content */}
-          </div>
+          ></div>
         </div>
       </div>
     );

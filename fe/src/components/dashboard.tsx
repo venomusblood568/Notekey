@@ -33,9 +33,9 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="px-8 py-8">
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between mb-5 gap-3">
             <h2 className="text-2xl font-semibold text-gray-800">Notes</h2>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition hover:cursor-pointer">
+            <button className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition hover:cursor-pointer">
               + Create Note
             </button>
           </div>
