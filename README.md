@@ -4,14 +4,14 @@ NoteKey is a secure, minimal notes app built with **OTP-based login** and **Auth
 
 ---
 
-## 🌐 Live URLs
+## Live URLs
 
-- 🔧 **Backend**: [https://notekey.onrender.com](https://notekey.onrender.com)  
-- 🎨 **Frontend**: [https://notekey-duck.vercel.app](https://notekey-duck.vercel.app)
+-  **Backend**: [https://notekey.onrender.com](https://notekey.onrender.com)  
+-  **Frontend**: [https://notekey-duck.vercel.app](https://notekey-duck.vercel.app)
 
 ---
 
-## 🛠️ Local Setup
+## Local Setup
 
 ### 1. **Clone the Repository**
 
@@ -29,7 +29,7 @@ cd backend
 npm install
 ```
 
-#### 📄 Create a `.env` file inside `/backend` with the following:
+#### Create a `.env` file inside `/backend` with the following:
 
 ```env
 PORT=3001
@@ -64,7 +64,7 @@ npm run dev
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 - **Frontend**: React, Vite, TailwindCSS  
 - **Backend**: Express.js, MongoDB, JWT  

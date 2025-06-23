@@ -123,7 +123,7 @@ export default function Dashboard() {
         </span>
       </div>
 
-      {/* Welcome */}
+      
       <div className="pt-24 px-6">
         <div className="border border-gray-300 p-4 rounded-2xl shadow-xl bg-white">
           <div className="text-lg text-gray-800 font-bold">

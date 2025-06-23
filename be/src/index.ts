@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.use("/api", apiRouter);
 
-// Optional: Health route to test from browser
+
 app.get("/", (req, res) => {
   res.send("✅ NoteKey Backend is running!");
 });

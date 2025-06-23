@@ -12,7 +12,6 @@ export const signinWithOtp = async (req: Request, res: Response): Promise<void> 
   }
 
   try {
-    // Verify OTP with Auth0
     const tokenResponse = await axios.post(
       `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
       {
@@ -31,10 +30,10 @@ export const signinWithOtp = async (req: Request, res: Response): Promise<void> 
       }
     );
 
-    // If OTP verification is successful
+   
     const accessToken = tokenResponse.data.access_token;
 
-    // Get user profile from Auth0
+    
     const userInfo = await axios.get(
       `https://${process.env.AUTH0_DOMAIN}/userinfo`,
       {
@@ -46,13 +45,13 @@ export const signinWithOtp = async (req: Request, res: Response): Promise<void> 
 
     const auth0Email = userInfo.data.email;
 
-    // Verify email matches
+    
     if (auth0Email !== email) {
       res.status(400).json({ message: "Email mismatch error." });
       return;
     }
 
-    // Find user in our database
+    
     const user = await User.findOne({ email: auth0Email });
 
     if (!user) {
@@ -60,7 +59,7 @@ export const signinWithOtp = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    // Generate JWT token for our application
+    
     const appToken = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET!,
