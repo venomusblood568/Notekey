@@ -42,11 +42,14 @@ export default function Signin() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:3001/api/auth/request-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      const res = await fetch(
+        "https://notekey.onrender.com/api/auth/request-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       if (res.ok) {
         setOtpSent(true);
@@ -71,11 +74,14 @@ export default function Signin() {
 
     try {
       setError("");
-      const res = await fetch("http://localhost:3001/api/auth/signin-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }),
-      });
+      const res = await fetch(
+        "https://notekey.onrender.com/api/auth/signin-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp }),
+        }
+      );
 
       const data = await res.json();
       if (res.ok) {
