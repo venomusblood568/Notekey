@@ -84,16 +84,12 @@ export default function Signin() {
       console.log("Signin response:", res.ok, data);
 
       if (res.ok) {
-        // Store token and user data based on "Keep me Logged In" choice
-        if (keepLoggedIn) {
-          // Use localStorage for persistent login
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user));
-        } else {
-          // Use sessionStorage for session-only login
-          sessionStorage.setItem("token", data.token);
-          sessionStorage.setItem("user", JSON.stringify(data.user));
-        }
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("user", JSON.stringify(data.user));
+
+        
 
         // Navigate to Dashboard
         navigate("/dashboard");
