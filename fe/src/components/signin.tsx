@@ -54,6 +54,7 @@ export default function Signin() {
         const data = await res.json();
         setError(data.message || "Failed to send OTP");
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError("Server error. Please try again.");
     } finally {
@@ -61,7 +62,7 @@ export default function Signin() {
     }
   };
 
-  const handleSignin = async (e) => {
+  const handleSignin = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     if (!emailValid) return setError("Please enter a valid email");
@@ -213,7 +214,9 @@ export default function Signin() {
                 type="button"
                 className="w-full flex items-center justify-center gap-2 p-3"
                 onClick={() =>
-                  loginWithRedirect({ connection: "google-oauth2" })
+                  loginWithRedirect({
+                    connection: "google-oauth2",
+                  } as never)
                 }
               >
                 Continue with Google

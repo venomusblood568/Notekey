@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
@@ -41,6 +41,10 @@ export default function Signup() {
       alert("Signup error");
     }
   };
+
+  function loginWithRedirect(): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col justify-center items-center space-y-6">
