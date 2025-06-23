@@ -1,14 +1,14 @@
 import express from "express";
 import { getNotes } from "../controller/getNotes";
 import {createNotes} from "../controller/createNotes";
-import {deleteNotes} from "../controller/deleteNotes";
-import {middlewareAuth } from "../middleware/middleauth";
+import {deleteNote} from "../controller/deleteNotes";
 const router = express.Router();
 
 // @ts-ignore
-router.get("/get-notes",middlewareAuth,getNotes);
+router.get("/get-notes",getNotes);
 // @ts-ignore
-router.post("/post-notes",middlewareAuth,createNotes);
+router.post("/post-notes",createNotes);
 // @ts-ignore
-router.delete("/delete-notes/:id",middlewareAuth,deleteNotes);
+router.delete("/delete-note/:id", deleteNote);
+
 export default router;

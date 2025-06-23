@@ -16,16 +16,17 @@ exports.getNotes = void 0;
 const notes_1 = __importDefault(require("../models/notes"));
 const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // Check if user info is present
-        if (!req.user || !req.user.userId) {
-            res.status(401).json({ message: "Unauthorized: Missing user info" });
+        const userId = req.query.userId;
+        if (!userId) {
+            res
+                .status(400)
+                .json({ message: "User ID is required as a query param." });
             return;
         }
-        // Fetch notes for the authenticated user
-        const notes = yield notes_1.default.find({ user: req.user.userId })
+        const notes = yield notes_1.default.find({ user: userId })
             .sort({ createdAt: -1 })
             .lean();
-        res.status(200).json(notes); // Return notes in response
+        res.status(200).json(notes);
     }
     catch (err) {
         console.error("Error fetching notes:", err);

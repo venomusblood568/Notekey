@@ -59,10 +59,11 @@ const signinWithOtp = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             return;
         }
         // Generate JWT token for our application
-        const appToken = jsonwebtoken_1.default.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const appToken = jsonwebtoken_1.default.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
         res.status(200).json({
             token: appToken,
             user: {
+                _id: user._id,
                 name: user.name,
                 email: user.email,
             },

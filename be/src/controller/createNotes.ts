@@ -1,21 +1,17 @@
-// controller/createNote.ts
 import { Request, Response } from "express";
 import Note from "../models/notes";
 
 export const createNotes = async (req: Request, res: Response) => {
   try {
-    const { title } = req.body;
-    const userId = (req as any).user?.id;
+    const { title, userId } = req.body;
 
     if (!userId) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized. User ID missing." });
+      return res.status(400).json({ message: "User ID is required." });
     }
 
     const note = new Note({
       title,
-      user: userId, // Attach the user ID
+      user: userId,
     });
 
     const savedNote = await note.save();

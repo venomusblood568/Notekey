@@ -1,30 +1,21 @@
 import { Request, Response } from "express";
 import Note from "../models/notes";
 
-// @ts-ignore
-interface AuthenticatedRequest extends Request {
-  user?: {
-    userId: string;
-  };
-}
-
-export const getNotes = async (
-  req: AuthenticatedRequest,
-  res: Response
-): Promise<void> => {
+export const getNotes = async (req: Request, res: Response): Promise<void> => {
   try {
-    // Check if user info is present
-    if (!req.user || !req.user.userId) {
-      res.status(401).json({ message: "Unauthorized: Missing user info" });
+    const userId = req.query.userId as string;
+
+    if (!userId) {
+      res
+        .status(400)
+        .json({ message: "User ID is required as a query param." });
       return;
     }
 
-    // Fetch notes for the authenticated user
-    const notes = await Note.find({ user: req.user.userId })
+    const notes = await Note.find({ user: userId })
       .sort({ createdAt: -1 })
       .lean();
-
-    res.status(200).json(notes); // Return notes in response
+    res.status(200).json(notes);
   } catch (err) {
     console.error("Error fetching notes:", err);
     res.status(500).json({ message: "Server error" });

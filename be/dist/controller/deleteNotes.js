@@ -12,23 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteNotes = void 0;
+exports.deleteNote = void 0;
 const notes_1 = __importDefault(require("../models/notes"));
-const deleteNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ message: "Note ID is required." });
+    }
     try {
-        const note = yield notes_1.default.findOneAndDelete({
-            _id: req.params.id,
-            user: req.user.userId,
-        });
-        if (!note) {
-            res.status(404).json({ message: "Note not found" });
-            return;
+        const deleted = yield notes_1.default.findByIdAndDelete(id);
+        if (!deleted) {
+            return res.status(404).json({ message: "Note not found." });
         }
-        res.json({ message: "Note deleted successfully" });
+        return res.status(200).json({ message: "Note deleted successfully." });
     }
     catch (err) {
-        console.error("Error deleting note:", err);
-        res.status(500).json({ message: "Server error" });
+        return res.status(500).json({ message: "Internal Server Error", err });
     }
 });
-exports.deleteNotes = deleteNotes;
+exports.deleteNote = deleteNote;

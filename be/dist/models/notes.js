@@ -36,6 +36,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const NoteSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
-    user: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: false },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model("Note", NoteSchema);

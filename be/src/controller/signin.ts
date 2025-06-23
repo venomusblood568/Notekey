@@ -62,7 +62,7 @@ export const signinWithOtp = async (req: Request, res: Response): Promise<void> 
 
     // Generate JWT token for our application
     const appToken = jwt.sign(
-      { userId: user._id, email: user.email },
+      { id: user._id, email: user.email },
       process.env.JWT_SECRET!,
       { expiresIn: "1h" }
     );
@@ -70,6 +70,7 @@ export const signinWithOtp = async (req: Request, res: Response): Promise<void> 
     res.status(200).json({
       token: appToken,
       user: {
+        _id: user._id,
         name: user.name,
         email: user.email,
       },

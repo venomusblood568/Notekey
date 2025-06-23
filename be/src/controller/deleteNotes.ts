@@ -1,31 +1,23 @@
 import { Request, Response } from "express";
 import Note from "../models/notes";
 
-// @ts-ignore
-interface AuthenticatedRequest extends Request {
-  user: {
-    userId: string;
-  };
-}
 
-export const deleteNotes = async (
-  req: AuthenticatedRequest,
-  res: Response
-): Promise<void> => {
+export const deleteNote = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ message: "Note ID is required." });
+  }
+
   try {
-    const note = await Note.findOneAndDelete({
-      _id: req.params.id,
-      user: req.user.userId,
-    });
+    const deleted = await Note.findByIdAndDelete(id);
 
-    if (!note) {
-      res.status(404).json({ message: "Note not found" });
-      return;
+    if (!deleted) {
+      return res.status(404).json({ message: "Note not found." });
     }
 
-    res.json({ message: "Note deleted successfully" });
+    return res.status(200).json({ message: "Note deleted successfully." });
   } catch (err) {
-    console.error("Error deleting note:", err);
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Internal Server Error", err });
   }
 };

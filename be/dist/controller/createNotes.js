@@ -15,18 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createNotes = void 0;
 const notes_1 = __importDefault(require("../models/notes"));
 const createNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     try {
-        const { title } = req.body;
-        const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+        const { title, userId } = req.body;
         if (!userId) {
-            return res
-                .status(401)
-                .json({ message: "Unauthorized. User ID missing." });
+            return res.status(400).json({ message: "User ID is required." });
         }
         const note = new notes_1.default({
             title,
-            user: userId, // Attach the user ID
+            user: userId,
         });
         const savedNote = yield note.save();
         res.status(201).json(savedNote);
