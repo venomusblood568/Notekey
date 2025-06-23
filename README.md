@@ -6,7 +6,8 @@ NoteKey is a secure, minimal notes app built with **OTP-based login** and **Auth
 
 ## Live URLs
 
--  **Backend**: [https://notekey.onrender.com](https://notekey.onrender.com)  
+-  **Backend**: [https://notekey.onrender.com](https://notekey.onrender.com)
+    Note: The backend is hosted for free on Render. If inactive for a while, it may go to sleep. In such cases, it can take around 50 seconds to wake up. Thanks for your patience!
 -  **Frontend**: [https://notekey-duck.vercel.app](https://notekey-duck.vercel.app)
 
 ---
