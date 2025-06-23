@@ -8,8 +8,8 @@ export default function Signup() {
   const [dob, setDob] = useState("");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [otpSent, setOtpSent] = useState(false);
+  const [isSendingOTP, setIsSendingOTP] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -17,32 +17,36 @@ export default function Signup() {
     navigate("/signin");
   };
 
-  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const requestOTP = async () => {
-    if (loading || !isValidEmail(email)) return; 
+    if (isSendingOTP || !isValidEmail(email)) return;
+
     try {
-      setLoading(true);
+      setIsSendingOTP(true);
+      setError("");
+
       const res = await fetch("http://localhost:3001/api/auth/request-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
+
       const data = await res.json();
+
       if (res.ok) {
         setOtpSent(true);
-        setError("");
-        alert("OTP SENT. PLEASE CHECK YOUR EMAIL.");
+        
       } else {
         setError(data.message || "Failed to send OTP");
       }
     } catch (err) {
       setError("Server error");
     } finally {
-      setLoading(false);
+      setIsSendingOTP(false);
     }
   };
-  
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,6 +57,8 @@ export default function Signup() {
     }
 
     try {
+      setLoading(true);
+
       const res = await fetch("http://localhost:3001/api/auth/verify-otp", {
         method: "POST",
         headers: {
@@ -72,35 +78,39 @@ export default function Signup() {
         throw new Error(data.message || "OTP Verification Failed");
       }
 
-      if(res.ok){
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("name", data.user.name);
-        localStorage.setItem("email", data.user);
-        alert("Signup successful")
-      }
-      navigate("/dashboard"); 
-    } catch (error:unknown) {
-      console.error(error.message);
-      alert(error.message);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("name", data.user.name);
+      localStorage.setItem("email", data.user.email); // ✅ fixed
+      alert("Signup successful");
+
+      navigate("/dashboard");
+    } catch (error: unknown) {
+      const errorMsg =
+        error instanceof Error ? error.message : "Something went wrong";
+      console.error(errorMsg);
+      alert(errorMsg);
+    } finally {
+      setLoading(false);
     }
   };
-  
 
   return (
     <div className="w-screen h-screen flex font-inter gap-4 overflow-hidden">
+      {/* Left Side */}
       <div className="w-full sm:w-[45%] bg-white relative flex flex-col justify-center items-center sm:items-start px-6 sm:px-40 min-h-screen">
-        {/* Logo */}
+        {/* Logo Desktop */}
         <div className="absolute top-6 left-6 sm:flex items-center gap-2 hidden">
           <img src="/icon.png" alt="Logo" className="w-8 h-8" />
           <h1 className="text-xl text-black font-bold">HD</h1>
         </div>
 
-        {/* Small Screen Logo */}
+        {/* Logo Mobile */}
         <div className="sm:hidden flex gap-2 items-center mb-6">
           <img src="/icon.png" alt="Logo" className="w-12 h-12 mb-2" />
           <h1 className="text-2xl text-black font-bold">HD</h1>
         </div>
 
+        {/* Form Container */}
         <div className="flex flex-col items-center sm:items-start w-full max-w-sm space-y-2">
           <h1 className="text-3xl sm:text-4xl font-bold text-black mb-2 sm:mb-4 text-center sm:text-left">
             Sign up
@@ -151,6 +161,13 @@ export default function Signup() {
                 className="w-full border-0 p-2 outline-none"
               />
             </div>
+            {isSendingOTP && (
+              <p className="text-blue-500 text-sm">Sending OTP...</p>
+            )}
+            {otpSent && !isSendingOTP && (
+              <p className="text-green-500 text-sm">OTP sent to your email! Check your spam as well!!</p>
+            )}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             {/* OTP */}
             <div className="relative border border-gray-300 rounded-xl p-1 focus-within:ring-2 focus-within:ring-blue-500">
@@ -189,13 +206,6 @@ export default function Signup() {
               </button>
             </div>
 
-            {/* Error message */}
-            {error && (
-              <div className="text-red-600 text-sm font-semibold text-center">
-                {error}
-              </div>
-            )}
-
             {/* OR Separator */}
             <div className="flex items-center gap-4 text-gray-500 my-4">
               <div className="flex-1 h-px bg-gray-300" />
@@ -208,13 +218,14 @@ export default function Signup() {
               <button
                 type="button"
                 className="w-full flex items-center justify-center gap-2 p-3"
+                onClick={() => navigate("/signin")}
               >
                 Continue with Google
                 <img src="/google.svg" alt="Google" className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Sign-in link */}
+            {/* Sign-in Link */}
             <p className="text-center text-sm mt-4">
               Already have an account?{" "}
               <span
@@ -228,7 +239,7 @@ export default function Signup() {
         </div>
       </div>
 
-      {/* Right Image Section */}
+      {/* Right Side with Image */}
       <div className="hidden sm:block w-[55%] h-screen p-2">
         <div
           className="w-full h-full rounded-3xl bg-cover bg-center flex flex-col justify-center items-start p-12"

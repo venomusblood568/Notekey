@@ -14,14 +14,13 @@ export default function Signin() {
   const [emailValid, setEmailValid] = useState(false);
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
 
-  // 🔁 Redirect authenticated users to dashboard
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
       navigate("/dashboard");
     }
   }, [isAuthenticated, isLoading, navigate]);
 
-  // ✅ Validate email and debounce send OTP
+
   useEffect(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValid = emailRegex.test(email);
@@ -36,7 +35,6 @@ export default function Signin() {
     }
   }, [email]);
 
-  // 📨 Send OTP request
   const sendOTP = async () => {
     if (isSendingOTP || otpSent) return;
 
@@ -63,7 +61,6 @@ export default function Signin() {
     }
   };
 
-  // 🔐 Submit OTP
   const handleSignin = async (e) => {
     e.preventDefault();
 
@@ -95,7 +92,7 @@ export default function Signin() {
     }
   };
 
-  // 🧭 Navigate to Signup
+
   const navigateSignup = () => navigate("/");
 
   return (
@@ -137,7 +134,9 @@ export default function Signin() {
               <p className="text-blue-500 text-sm">Sending OTP...</p>
             )}
             {otpSent && !isSendingOTP && (
-              <p className="text-green-500 text-sm">OTP sent to your email!</p>
+              <p className="text-green-500 text-sm">
+                OTP sent to your email! Check your spam as well!!
+              </p>
             )}
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
