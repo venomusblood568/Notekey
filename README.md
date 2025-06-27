@@ -17,7 +17,7 @@ NoteKey is a secure, minimal notes app built with **OTP-based login** and **Auth
 ### 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/notekey.git
+git clone https://github.com/venomusblood568/Notekey.git
 cd notekey
 ```
 
